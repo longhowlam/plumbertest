@@ -19,7 +19,7 @@ jaap = jaap %>%
   )
 
 huismodel1 = lm(prijs ~ Type +  Oppervlakte + kamers + PC, data = jaap)
-huismodel2 = lm(prijs ~ Type +  ns(Oppervlakte,9) + kamers + PC, data = jaap)
+huismodel2 = lm(prijs ~ Type +  ns(Oppervlakte, 9) + kamers + PC, data = jaap)
 
 summary(huismodel2)
 
@@ -30,7 +30,7 @@ predict(
   newdata = data.frame(
     Oppervlakte = 100,
     kamers = 3,
-    PC = "16",
+    PC = "56",
     Type = "Hoekwoning"
   )
 )
