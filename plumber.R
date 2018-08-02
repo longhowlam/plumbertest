@@ -56,3 +56,22 @@ function(opp, nkamers, PC2, type){
     )
   )
 }
+
+
+
+#* predict the value of a house with xgboost
+#* @param opp Oppervlakte van huis in vierkante meters
+#* @param nkamers aantal kamers huis
+#* @param PC2 eerste twee cijfers van postcode waar huis staat
+#* @param type type huis
+#* @post /rhuisxgboost
+function(opp, nkamers, PC2, type){
+  PC = as.factor(PC2)
+  levels(PC) = PClvl
+  Type = as.factor(type)
+  levels(Type) = Typelvl
+  
+  pd = data.frame(PC, Type, Oppervlakte = as.numeric(opp), kamers = as.numeric(nkamers))
+  tmp = sparse.model.matrix(  ~ PC + Oppervlakte + kamers + Type, data = pd)
+  predict(xgb_model, newdata = tmp)
+}

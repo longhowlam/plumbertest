@@ -1,20 +1,23 @@
 library(plumber)
 library(splines)
+library(xgboost)
 
 
 huismodel2 = readRDS("/var/plumber/r_huisspline/huismodel2.RDs")
+xgb_model = readRDS("/var/plumber/r_huisspline/xgb_model.RDs")
+Typelvl = readRDS("/var/plumber/r_huisspline/Typelvl.RDs")
+PClvl = readRDS("/var/plumber/r_huisspline/PClvl.RDs")
 
 #* @apiTitle Plumber huisprijs voorspeller linear model met spline
 
 
-#* predict the value of a house
+#* predict the value of a house with spline
 #* @param opp Oppervlakte van huis in vierkante meters
 #* @param nkamers aantal kamers huis
 #* @param PC2 eerste twee cijfers van postcode waar huis staat
 #* @param type type huis
 #* @post /rhuisspline
 function(opp, nkamers, PC2, type){
-  browser()
   predict(
     huismodel2, 
     newdata = data.frame(
@@ -26,11 +29,20 @@ function(opp, nkamers, PC2, type){
   )
 }
 
-#* Return the sum of two numbers
-#* @param a The first number to add
-#* @param b The second number to add
-#* @post /sum
-function(a, b){
-  as.numeric(a) + 3*as.numeric(b)
-}
 
+#* predict the value of a house with xgboost
+#* @param opp Oppervlakte van huis in vierkante meters
+#* @param nkamers aantal kamers huis
+#* @param PC2 eerste twee cijfers van postcode waar huis staat
+#* @param type type huis
+#* @post /rhuisxgboost
+function(opp, nkamers, PC2, type){
+  PC = as.factor(PC2)
+  levels(PC) = PClvl
+  Type = as.factor(type)
+  levels(Type) = Typelvl
+
+  pd = data.frame(PC, Type, Oppervlakte = as.numeric(opp), kamers = as.numeric(nkamers))
+  tmp = sparse.model.matrix(  ~ PC + Oppervlakte + kamers + Type, data = pd)
+  predict(xgb_model, newdata = tmp)
+}
