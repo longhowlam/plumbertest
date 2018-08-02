@@ -44,7 +44,7 @@ mydrop = d1$`house-model`
 
 do_deploy_api(
   mydrop,
-  "r_huisspline", "../plumber_test/huismodel/",
+  "r_huisspline", "../plumbertest/huismodel/",
   8004, swagger = TRUE, forward = TRUE
 )
 
