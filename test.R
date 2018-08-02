@@ -27,3 +27,5 @@ droplets()
 droplets() %>% droplets_cost()
 droplets()
 analogsea::snapshots()
+
+
