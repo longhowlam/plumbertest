@@ -8,7 +8,7 @@ xgb_model = readRDS("/var/plumber/r_huisspline/xgb_model.RDs")
 Typelvl = readRDS("/var/plumber/r_huisspline/Typelvl.RDs")
 PClvl = readRDS("/var/plumber/r_huisspline/PClvl.RDs")
 
-#* @apiTitle Plumber huisprijs voorspeller linear model met spline
+#* @apiTitle Plumber huisprijs voorspeller linear model met spline.....
 
 
 #* predict the value of a house with spline
@@ -37,10 +37,8 @@ function(opp, nkamers, PC2, type){
 #* @param type type huis
 #* @post /rhuisxgboost
 function(opp, nkamers, PC2, type){
-  PC = as.factor(PC2)
-  levels(PC) = PClvl
-  Type = as.factor(type)
-  levels(Type) = Typelvl
+  PC = factor(PC2, levels = PClvl)
+  Type = factor(type,levels = Typelvl)
 
   pd = data.frame(PC, Type, Oppervlakte = as.numeric(opp), kamers = as.numeric(nkamers))
   tmp = sparse.model.matrix(  ~ PC + Oppervlakte + kamers + Type, data = pd)

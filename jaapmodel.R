@@ -44,6 +44,14 @@ jaap = jaap %>% filter(
   !is.na(Oppervlakte)
 )
 
+
+pp =sparse.model.matrix(
+  prijs ~Type,
+  data = jaap
+) 
+dim(pp)
+
+
 #### xgboost needs model matrix
 xgb_model = sparse.model.matrix(
   prijs ~ PC + Oppervlakte + kamers + Type,
@@ -72,9 +80,8 @@ print(p)
 PClvl = levels(as.factor(jaap$PC))
 Typelvl = levels(as.factor(jaap$Type))
 
-PC = as.factor("10")
-levels(PC) = PClvl
-Type = as.factor("Hoekwoning")
+PC = factor("10", levels = PClvl)
+Type = factor("Hoekwoning", levels = Typelvl)
 levels(Type) = Typelvl
 
 pd = data.frame(PC, Type, Oppervlakte = 50, kamers = 4)
