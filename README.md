@@ -1,2 +1,2 @@
 # plumbertest
-plumber testje
+plumber test om een predictive model te deployen
