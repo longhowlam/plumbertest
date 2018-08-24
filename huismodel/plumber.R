@@ -3,8 +3,11 @@ library(splines)
 library(xgboost)
 library(Matrix)
 
+### model objecten die we eerder gemaakt hebben
 huismodel2 = readRDS("/var/plumber/r_huisspline/huismodel2.RDs")
 xgb_model = readRDS("/var/plumber/r_huisspline/xgb_model.RDs")
+
+### de verschillende levels die er zijn in Type en PC
 Typelvl = readRDS("/var/plumber/r_huisspline/Typelvl.RDs")
 PClvl = readRDS("/var/plumber/r_huisspline/PClvl.RDs")
 

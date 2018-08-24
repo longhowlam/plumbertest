@@ -88,6 +88,8 @@ pd = data.frame(PC, Type, Oppervlakte = 50, kamers = 4)
 tmp = sparse.model.matrix(  ~ PC + Oppervlakte + kamers + Type, data = pd)
 predict(xgb_model, newdata = tmp)
 
+# bewaar het model en de levels die we nodig hebben om 
+# nieuwe cases te kunnen scoren
 saveRDS(Typelvl, "huismodel/Typelvl.RDs")
 saveRDS(PClvl, "huismodel/PClvl.RDs")
 saveRDS(xgb_model, "huismodel/xgb_model.RDs")
