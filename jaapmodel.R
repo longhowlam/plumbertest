@@ -80,11 +80,10 @@ print(p)
 PClvl = levels(as.factor(jaap$PC))
 Typelvl = levels(as.factor(jaap$Type))
 
-PC = factor("10", levels = PClvl)
-Type = factor("Hoekwoning", levels = Typelvl)
-levels(Type) = Typelvl
+PC = factor("96", levels = PClvl)
+Type = factor("Tussenwoning", levels = Typelvl)
 
-pd = data.frame(PC, Type, Oppervlakte = 50, kamers = 4)
+pd = data.frame(PC, Type, Oppervlakte = 100, kamers = 4)
 tmp = sparse.model.matrix(  ~ PC + Oppervlakte + kamers + Type, data = pd)
 predict(xgb_model, newdata = tmp)
 
